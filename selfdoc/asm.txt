@@ -1,0 +1,11 @@
+ASM SELFDOC
+
+((grantlmul@gmail.com,25/02/2020))
+
+Name		(Pseudo)code	Output
+Bitwise shift	1010<<2		101000
+Bitwise or	1010|1100	1110
+Bitwise and	1010&1100	1000
+parentheses	()		literally just math
+unary minus	-1101		0010
+

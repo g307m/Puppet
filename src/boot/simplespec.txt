@@ -1,0 +1,7 @@
+    ______________________
+==[[ MULTIBOOT SPEC NOTES ]]==
+    ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+Offset	size	Name		value?
+0	u32	magic		0x1BADB002
+4	u32	flags		(1<<0) 00 | 10 (1<<1)
+8	u32	checksum	opposite of magic+flags, -(magic+flags)
