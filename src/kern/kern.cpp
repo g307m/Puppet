@@ -14,6 +14,11 @@
 #error "you need an ix86-elf compiler"
 #endif
 
-// I'm basically minimizing the OSDev wiki barebones here, so *bare* with me
-
+size_t strlen(const char* str) 
+{
+        size_t len = 0;
+            while (str[len])
+                        len++;
+                return len;
+}
 
