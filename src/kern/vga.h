@@ -25,14 +25,18 @@ namespace VGA
 		VGA_COLOR_WHITE = 15,
 	};
 
-	class Terminal
+	class Term
 	{
 		public:
-			void Init();
+			void Init(void);
+			void SetColor(uint8_t color);
+			void WriteString(const char* data);
 		private:
 			size_t    row    = 0;
 			size_t    column = 0;
 			uint8_t   color  = 7 | 0 << 4;
 			uint16_t* buffer = (uint16_t*) 0xB8000;
+			void      Entry    (char c, uint8_t color, size_t x, size_t y);
+			
 	}
 }

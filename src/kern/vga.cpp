@@ -53,7 +53,7 @@ namespace VGA
 		}
 		void WriteString(const char* data) 
 		{
-			terminal_write(data, strlen(data));
+			Write(data, strlen(data));
 		}
 	}
 }
