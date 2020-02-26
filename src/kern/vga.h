@@ -38,5 +38,5 @@ namespace VGA
 			uint16_t* buffer = (uint16_t*) 0xB8000;
 			void      Entry    (char c, uint8_t color, size_t x, size_t y);
 			
-	}
+	};
 }

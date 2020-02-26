@@ -30,8 +30,11 @@ init:
 
 boot.o:
 	$(TARGET)-as $(BOOT)/boot.s -o $(BUILD)/boot.o
-kern.o:
-	$(TARGET)-g++ -c $(KERN)/kern.cpp -o $(BUILD)/kern.o $(FG++)
+vga.o:
+	$(TARGET)-g++ -c $(KERN)/vga.cpp -o $(BUILD)/kern.o $(FG++)
+kern.o: vga.o
+	$(TARGET)-g++ -c $(KERN)/kern.cpp -o $(BUILD)/kld.o $(FG++)
+	ld -r -o $(BUILD)/kern.o $(BUILD)/kld.o $(BUILD)/vga.o
 default: kern.o boot.o
 	mkdir $(BUILD)/$(VER) -p
 	cd $(BUILD)
