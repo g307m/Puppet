@@ -54,6 +54,7 @@ namespace VGA
 	}
 	void VGA::Term::WriteString(const char* data) 
 	{
-		Write(data, String::strlen(data));
+		String::Numbers instance;
+		Write(data, instance.strlen(data));
 	}
 }

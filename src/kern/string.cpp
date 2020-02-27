@@ -1,7 +1,11 @@
 // string.cpp
 #include "string.h"
 
-size_t String::strlen(const char* str)
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+
+size_t String::Numbers::strlen(const char* str)
 {
 	size_t len = 0;
 	while (str[len])
