@@ -3,6 +3,7 @@
 #include <stdint.h>
 
 #include "vga.h"
+#include "string.h"
 
 /* Check if the compiler thinks you are targeting the wrong operating system. */
 #if defined(__linux__)
@@ -14,11 +15,11 @@
 #error "you need an ix86-elf compiler"
 #endif
 
-size_t strlen(const char* str) 
-{
-        size_t len = 0;
-            while (str[len])
-                        len++;
-                return len;
+extern "C" void kernel_main(void)
+{	
+	VGA::Term Term;
+	Term.Init();
+
+	Term.WriteString("aeugh");
 }
 

@@ -2,6 +2,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "string.h"
+
 namespace VGA
 {
 	static const size_t WIDTH  = 80;
@@ -24,6 +26,9 @@ namespace VGA
 		VGA_COLOR_LIGHT_BROWN = 14,
 		VGA_COLOR_WHITE = 15,
 	};
+	
+	inline uint8_t Entry(VGA::Color,VGA::Color);
+	inline uint16_t EntryColor(unsigned char uc, uint8_t color);
 
 	class Term
 	{
@@ -31,7 +36,9 @@ namespace VGA
 			void Init(void);
 			void SetColor(uint8_t color);
 			void WriteString(const char* data);
+			void Write(const char* data, size_t size);
 		private:
+			void PutChar(char c);
 			size_t    row    = 0;
 			size_t    column = 0;
 			uint8_t   color  = 7 | 0 << 4;

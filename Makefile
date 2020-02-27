@@ -18,7 +18,7 @@ FG++ = -ffreestanding -O2 -Wall -Wextra -fno-exceptions -fno-rtti
 FGCC = -ffreestanding -O2 -nostdlib -lgcc
 
 # src stuff
-SRC  = src
+SRC  = $(ROOT)/src
 BOOT = $(SRC)/boot
 KERN = $(SRC)/kern
 
@@ -31,11 +31,11 @@ init:
 boot.o:
 	$(TARGET)-as $(BOOT)/boot.s -o $(BUILD)/boot.o
 vga.o:
-	$(TARGET)-g++ -c $(KERN)/vga.cpp -o $(BUILD)/kern.o $(FG++)
+	$(TARGET)-g++ -c $(KERN)/vga.cpp -o $(BUILD)/vga.o $(FG++)
 kern.o: vga.o
 	$(TARGET)-g++ -c $(KERN)/kern.cpp -o $(BUILD)/kld.o $(FG++)
-	ld -r -o $(BUILD)/kern.o $(BUILD)/kld.o $(BUILD)/vga.o
+	$(TARGET)-ld -r -o $(BUILD)/kern.o $(BUILD)/kld.o $(BUILD)/vga.o
 default: kern.o boot.o
 	mkdir $(BUILD)/$(VER) -p
-	cd $(BUILD)
-	$(TARGET)-gcc -T $(SRC)/linker.ld -o $(BUILD)/$(VER)/kern.bin $^ $(FGCC)
+	cd $(BUILD);\
+	$(TARGET)-gcc -T $(SRC)/linker.ld -o $(VER)/kern.bin $^ $(FGCC)
