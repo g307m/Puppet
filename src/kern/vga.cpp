@@ -46,6 +46,11 @@ namespace VGA
 			if (++row == VGA::HEIGHT)
 				row = 0;
 		}
+		if(c=='\n') // newline support, boi
+		{
+			column=0;
+			row++;
+		}
 	}
 	void VGA::Term::Write(const char* data, size_t size) 
 	{
