@@ -37,9 +37,11 @@ string.o:
 	$(TARGET)-elf-g++ -c $(KERN)/string.cpp -o $(BUILD)/string.o $(FG++)
 vga.o: string.o
 	$(TARGET)-elf-g++ -c $(KERN)/vga.cpp -o $(BUILD)/vga.o $(FG++)
-kern.o: vga.o
+term.o: vga.o string.o
+	$(TARGET)-elf-g++ -c $(KERN)/term.cpp -o $(BUILD)/term.o $(FG++)
+kern.o: vga.o term.o
 	$(TARGET)-elf-g++ -c $(KERN)/kern.cpp -o $(BUILD)/kld.o $(FG++)
-	$(TARGET)-elf-ld -r -o $(BUILD)/kern.o $(BUILD)/string.o $(BUILD)/kld.o $(BUILD)/vga.o
+	$(TARGET)-elf-ld -r -o $(BUILD)/kern.o $(BUILD)/string.o $(BUILD)/kld.o $(BUILD)/term.o $(BUILD)/vga.o
 default: kern.o boot.o
 	mkdir $(BUILD)/$(VER) -p
 	cd $(BUILD);\

@@ -16,7 +16,7 @@ namespace VGA
 	{
 		return (uint16_t) uc | (uint16_t) color << 8;
 	}
-	void VGA::Term::Init(void) 
+	void VGA::Text::Reset(void) 
 	{
 		row = 0;
 		column = 0;
@@ -29,22 +29,20 @@ namespace VGA
 			}
 		}
 	}
-	void VGA::Term::Entry(char c, uint8_t color, size_t x, size_t y) 
+	void VGA::Text::Entry(char c, uint8_t color, size_t x, size_t y) 
 	{
 		const size_t index = y * VGA::WIDTH + x;
 		vgabuffer[index] = VGA::Entry(c, color);
 	}
-	void VGA::Term::SetColor(uint8_t color) 
+	void VGA::Text::SetColor(uint8_t color) 
 	{
-		Term::color = color;
+		Text::color = color;
 	}
-	void VGA::Term::PutChar(char c) 
+	void VGA::Text::PutChar(char c) 
 	{
 		Entry(c, color, column, row);
 		if (++column == VGA::WIDTH) {
 			column = 0;
-			if (++row == VGA::HEIGHT)
-				row = 0;
 		}
 		if(c=='\n') // newline support, boi
 		{
@@ -52,38 +50,14 @@ namespace VGA
 			row++;
 		}
 	}
-	void VGA::Term::Write(const char* data, size_t size) 
+	void VGA::Text::Write(const char* data, size_t size) 
 	{
 		for (size_t i = 0; i < size; i++)
 			PutChar(data[i]);
 	}
-	void VGA::Term::WriteString(const char* data) 
+	void VGA::Text::WriteString(const char* data) 
 	{
 		String::Numbers instance;
 		Write(data, instance.strlen(data));
-	}
-	void VGA::Term::bWrite(const char* data, size_t size) // no color yet
-	{
-		for (size_t i = 0; i < size; i++)
-		{
-			if (++BufferY == VGA::HEIGHT)
-					for (int8_t ii = VGA::HEIGHT;ii>0;i--) //vertical
-						for (size_t iii = 0; iii<VGA::WIDTH;iii++) // horizontal
-							Buffer[i-1][iii] = Buffer[i][iii]; // move up
-			if (++BufferX == VGA::WIDTH) {
-				BufferX = 0;
-				BufferY++;
-			}
-			Buffer[BufferY][BufferX] = data[i];
-		}
-	}
-	void Term::bWriteString(const char* data)
-	{
-		String::Numbers instance;
-		bWrite(data, instance.strlen(data));
-	}
-	void Term::bShow()
-	{
-
 	}
 }

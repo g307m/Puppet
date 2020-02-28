@@ -1,3 +1,5 @@
+#pragma once
+
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -30,10 +32,10 @@ namespace VGA
 	inline uint8_t Entry(VGA::Color,VGA::Color);
 	inline uint16_t EntryColor(unsigned char uc, uint8_t color);
 
-	class Term
+	class Text
 	{
 		public:
-			void Init         (void);
+			void Reset        (void);
 			void SetColor     (uint8_t color);
 			void WriteString  (const char* data);
 			// Made available, but usage is discouraged.
@@ -44,15 +46,18 @@ namespace VGA
 			void bWriteString (const char* data);
 			// Refresh screen with buffer
 			void bShow();
+			//clear buffer
+			void bClear();
+			size_t    row    = 0;
+			size_t    column    = 0;
 		private:
 			// better text handling + SCROLLING(!)
-			char    Buffer[VGA::HEIGHT][VGA::WIDTH];
+			char*   Buffer[VGA::HEIGHT];
 			uint8_t BufferX = 0;
 			uint8_t BufferY = 0;
+			void    bScroll();
 			//const char* OldBuffer[VGA::HEIGHT]; // may be necessary allow scrolling
 			void PutChar(char c);
-			size_t    row    = 0;
-			size_t    column = 0;
 			uint8_t   color  = 7 | 0 << 4;
 			uint16_t* vgabuffer = (uint16_t*) 0xB8000;
 			void      Entry    (char c, uint8_t color, size_t x, size_t y);

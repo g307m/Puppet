@@ -18,9 +18,10 @@
 extern "C" void kernel_main(void)
 {	
 	VGA::Term Term; // shut lip, [COMPILER]
-	Term.Init();
 
-	Term.bWriteString("aeugh"); // haha pufferfish funny
-	Term.bShow();
+	Term.Write('a');
+	Term.Write('\n');
+	Term.Write('b');
+	Term.Print();
 }
 
