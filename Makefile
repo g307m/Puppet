@@ -18,7 +18,7 @@ BUILD         = build
 ROOT = $(shell pwd)
 
 #flags for programs
-FG++ = -ffreestanding -O2 -Wall -Wextra -fno-exceptions -fno-rtti -Wunused-parameter
+FG++ = -ffreestanding -O2 -Wall -Wextra -fno-exceptions -fno-rtti -Wunused-parameter -std=c++17
 FGCC = -ffreestanding -O2 -nostdlib -lgcc -Wunused-parameter
 
 # src stuff
@@ -39,7 +39,7 @@ vga.o: string.o
 	$(TARGET)-elf-g++ -c $(KERN)/vga.cpp -o $(BUILD)/vga.o $(FG++)
 term.o: vga.o string.o
 	$(TARGET)-elf-g++ -c $(KERN)/term.cpp -o $(BUILD)/term.o $(FG++)
-kern.o: vga.o term.o
+kern.o: string.o vga.o term.o
 	$(TARGET)-elf-g++ -c $(KERN)/kern.cpp -o $(BUILD)/kld.o $(FG++)
 	$(TARGET)-elf-ld -r -o $(BUILD)/kern.o $(BUILD)/string.o $(BUILD)/kld.o $(BUILD)/term.o $(BUILD)/vga.o
 default: kern.o boot.o

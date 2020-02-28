@@ -64,6 +64,7 @@ namespace Term
 			}
 			yes[no+1] = '\n';
 		}
-		VGA::Text.WriteString(yes);
+		VGA::Text inst;
+		inst.WriteString(yes);
 	}
 }

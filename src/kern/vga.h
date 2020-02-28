@@ -48,8 +48,8 @@ namespace VGA
 			void bShow();
 			//clear buffer
 			void bClear();
-			size_t    row    = 0;
-			size_t    column    = 0;
+			static size_t    row    ;
+			static size_t    column ;
 		private:
 			// better text handling + SCROLLING(!)
 			char*   Buffer[VGA::HEIGHT];

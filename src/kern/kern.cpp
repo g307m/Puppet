@@ -3,6 +3,7 @@
 #include <stdint.h>
 
 #include "vga.h"
+#include "term.h"
 #include "string.h"
 
 /* Check if the compiler thinks you are targeting the wrong operating system. */
@@ -17,11 +18,9 @@
 
 extern "C" void kernel_main(void)
 {	
-	VGA::Term Term; // shut lip, [COMPILER]
-
-	Term.Write('a');
-	Term.Write('\n');
-	Term.Write('b');
-	Term.Print();
+	Term::Write('a');
+	Term::Write('\n');
+	Term::Write('b');
+	Term::Print();
 }
 
