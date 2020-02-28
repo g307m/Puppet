@@ -33,16 +33,28 @@ namespace VGA
 	class Term
 	{
 		public:
-			void Init(void);
-			void SetColor(uint8_t color);
-			void WriteString(const char* data);
-			void Write(const char* data, size_t size);
+			void Init         (void);
+			void SetColor     (uint8_t color);
+			void WriteString  (const char* data);
+			// Made available, but usage is discouraged.
+			void Write        (const char* data, size_t size);
+			// Either set to zero will continue like 'vanilla' Write.
+			void bWrite       (const char* data, size_t size);
+			// WriteString for scrolling
+			void bWriteString (const char* data);
+			// Refresh screen with buffer
+			void bShow();
 		private:
+			// better text handling + SCROLLING(!)
+			char    Buffer[VGA::HEIGHT][VGA::WIDTH];
+			uint8_t BufferX = 0;
+			uint8_t BufferY = 0;
+			//const char* OldBuffer[VGA::HEIGHT]; // may be necessary allow scrolling
 			void PutChar(char c);
 			size_t    row    = 0;
 			size_t    column = 0;
 			uint8_t   color  = 7 | 0 << 4;
-			uint16_t* buffer = (uint16_t*) 0xB8000;
+			uint16_t* vgabuffer = (uint16_t*) 0xB8000;
 			void      Entry    (char c, uint8_t color, size_t x, size_t y);
 			
 	};

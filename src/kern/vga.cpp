@@ -21,18 +21,18 @@ namespace VGA
 		row = 0;
 		column = 0;
 		color = EntryColor(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK);
-		buffer = (uint16_t*) 0xB8000;
+		vgabuffer = (uint16_t*) 0xB8000;
 		for (size_t y = 0; y < VGA::HEIGHT; y++) {
 			for (size_t x = 0; x < VGA::WIDTH; x++) {
 				const size_t index = y * VGA::WIDTH + x;
-				buffer[index] = VGA::Entry(' ', color);
+				vgabuffer[index] = VGA::Entry(' ', color);
 			}
 		}
 	}
 	void VGA::Term::Entry(char c, uint8_t color, size_t x, size_t y) 
 	{
 		const size_t index = y * VGA::WIDTH + x;
-		buffer[index] = VGA::Entry(c, color);
+		vgabuffer[index] = VGA::Entry(c, color);
 	}
 	void VGA::Term::SetColor(uint8_t color) 
 	{
@@ -61,5 +61,29 @@ namespace VGA
 	{
 		String::Numbers instance;
 		Write(data, instance.strlen(data));
+	}
+	void VGA::Term::bWrite(const char* data, size_t size) // no color yet
+	{
+		for (size_t i = 0; i < size; i++)
+		{
+			if (++BufferY == VGA::HEIGHT)
+					for (int8_t ii = VGA::HEIGHT;ii>0;i--) //vertical
+						for (size_t iii = 0; iii<VGA::WIDTH;iii++) // horizontal
+							Buffer[i-1][iii] = Buffer[i][iii]; // move up
+			if (++BufferX == VGA::WIDTH) {
+				BufferX = 0;
+				BufferY++;
+			}
+			Buffer[BufferY][BufferX] = data[i];
+		}
+	}
+	void Term::bWriteString(const char* data)
+	{
+		String::Numbers instance;
+		bWrite(data, instance.strlen(data));
+	}
+	void Term::bShow()
+	{
+
 	}
 }

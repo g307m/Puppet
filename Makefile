@@ -18,8 +18,8 @@ BUILD         = build
 ROOT = $(shell pwd)
 
 #flags for programs
-FG++ = -ffreestanding -O2 -Wall -Wextra -fno-exceptions -fno-rtti
-FGCC = -ffreestanding -O2 -nostdlib -lgcc
+FG++ = -ffreestanding -O2 -Wall -Wextra -fno-exceptions -fno-rtti -Wunused-parameter
+FGCC = -ffreestanding -O2 -nostdlib -lgcc -Wunused-parameter
 
 # src stuff
 SRC  = $(ROOT)/src
