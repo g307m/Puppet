@@ -33,15 +33,10 @@ init:
 # 1a # compilation default
 boot.o:
 	$(TARGET)-elf-as $(BOOT)/boot.s -o $(BUILD)/boot.o
-string.o:
-	$(TARGET)-elf-g++ -c $(KERN)/string.cpp -o $(BUILD)/string.o $(FG++)
-vga.o: string.o
-	$(TARGET)-elf-g++ -c $(KERN)/vga.cpp -o $(BUILD)/vga.o $(FG++)
-kern.o: vga.o
-	$(TARGET)-elf-g++ -c $(KERN)/kern.cpp -o $(BUILD)/kld.o $(FG++)
-	$(TARGET)-elf-ld -r -o $(BUILD)/kern.o $(BUILD)/string.o $(BUILD)/kld.o $(BUILD)/vga.o
+kern.o:
+	i686-elf-gcc -c $(KERN)/Kernel.c -o $(BUILD)/kern.o -std=gnu99 -ffreestanding -O2 -Wall -Wextra
 default: kern.o boot.o
-	mkdir $(BUILD)/$(VER) -p
+	-mkdir $(BUILD)/$(VER) -p
 	cd $(BUILD);\
 	$(TARGET)-elf-gcc -T $(SRC)/linker.ld -o $(VER)/Puppet.bin $^ $(FGCC)
 
@@ -49,12 +44,13 @@ default: kern.o boot.o
 iso:
 	sh script/iso.sh $(BUILD)/$(VER)/Puppet.bin
 	-mkdir -p $(BUILD)/iso/boot/grub
-	cp $(BUILD)/$(VER)/kern.bin $(BUILD)/iso/boot/Puppet.bin
+	cp $(BUILD)/$(VER)/Puppet.bin $(BUILD)/iso/boot/Puppet.bin
 	cp script/grubiso.cfg $(BUILD)/iso/boot/grub/grub.cfg
 	grub-mkrescue -o $(BUILD)/$(VER)/Puppet.iso $(BUILD)/iso
 qemu-bin:
 	qemu-system-i386 -kernel $(BUILD)/$(VER)/Puppet.bin
 qemu-iso:
 	qemu-system-i386 -cdrom $(BUILD)/$(VER)/Puppet.iso
-qemu_iso: iso qemu-iso
-
+andiso: default iso
+swore: andiso
+	qemu-system-i386 -cdrom $(BUILD)/$(VER)/Puppet.iso -curses

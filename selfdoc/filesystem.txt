@@ -1,0 +1,33 @@
+The Filesystem of Puppet; an example:
+
+// (Root)
+|-Apps/ (/bin)
+| |-Text/ (cli apps)
+| | `-pico
+| | `-fetch (screenfetch but puppeteered)
+| `-Gfx/ (Graphical programs, not that there'll be much for that.)
+|   `-gFM ([g]raphical [F]ile [M]anager )
+|-Boot/ (/boot)
+|-Home/ (/home)
+| `-grantlmul
+|   `-.runcom (the rc in bashrc)
+|-Libraries/
+|-Raw/ (/dev)
+| `-disk
+|   `-1 (disk 1)
+|     |-1 (volume 1)
+|     `-2 (volume 2, probably root)
+|-Super/ (Superuser stuff)
+| `-Apps/
+|   |-Gfx/
+|   `-Text/
+`-System/ (C:\Windows?)
+  |-Apps/ (High-importance apps)
+  | |-cmatrix (hakahman)
+  | |-ls
+  | |-pellet/ (shell, PuppEt LiteraL EnvrionmenT)
+  | | |-pellet
+  | | `-.runcom
+  | `-ping
+  `-Multi/ (not 100% important, but still a major component)
+   `-mount
